@@ -3,7 +3,7 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
-    if (event.request.url.match(/todos/)) {
+    if (event.request.url.match(/todo/)) {
         console.log('request.matched', event.request);
         if (event.request.method === 'GET') {
             const messages = JSON.stringify([
