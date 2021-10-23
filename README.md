@@ -2,6 +2,8 @@
 
 Couldn't figure out how to test view on list page. Basically can't tell that VueDraggable module lists given todos correctly. And without that module, it is not easy to implement drag&drop via pure js. So i hope i can find a way to add a test for that module soon.
 
+PS: ServiceWorker not work on first hard-refresh, it should be soft refreshed after page loaded.
+
 # Speed Tail - Interview Project
 
 ## Description
