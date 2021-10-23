@@ -14,10 +14,6 @@ function storeWithState(state) {
   return store(state);
 }
 
-function storeWithDispatch(dispatch) {
-  return store({}, dispatch);
-}
-
 function storeWithStateAndDispatch(state, dispatch) {
   return store(state, dispatch);
 }
@@ -40,8 +36,20 @@ describe('it tests Edit component', () => {
     expect(wrapper.find('select').element.value).toEqual(MockTodos[0].state);
   });
 
+  test('it shows a message when no props given', () => {
+    const wrapper = shallowMount(Edit, {
+      global: {
+        mocks: {
+          $store: storeWithState({todo: {}})
+        }
+      }
+    });
+
+    expect(wrapper.text()).toContain('No Todo Selected To Update');
+  }); 
+
   test('it catches update event from Edit component and dispatches todo/updateTodo', async () => {
-    const dispatch = jest.fn();
+    const dispatch = jest.fn(() => Promise.resolve({}));
     const expectedValue = MockTodos[0];
 
     const wrapper = shallowMount(Edit, {
@@ -58,9 +66,7 @@ describe('it tests Edit component', () => {
         },
       }
     });
-
-    await wrapper.find('button').trigger('click');
-
+    wrapper.find('button').trigger('click');
     expect(wrapper.findAll('form')).toHaveLength(1);
     expect(dispatch).toHaveBeenCalledWith('todo/updateTodo', expectedValue);
   });

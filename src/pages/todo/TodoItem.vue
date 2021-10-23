@@ -1,5 +1,5 @@
 <template>
-  <tr class="todo-item">
+  <tr>
     <td class="text-center">
       {{ todo.name }}
     </td>

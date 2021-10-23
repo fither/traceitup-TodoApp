@@ -7,6 +7,9 @@
         <th>Actions</th>
       </tr>
     </thead>
+    <!-- <tbody>
+      <TodoItem draggable="true" v-for="todo in todos" :key="todo.id" :todo="todo" />
+    </tbody> -->
     <draggable 
       :list="todos" 
       item-key="id"
@@ -14,7 +17,7 @@
       :sort="true"
     >
       <template #item="{element}">
-        <todo-item :todo="element"></todo-item>
+        <TodoItem class="todo-item" :todo="element" />
       </template>
     </draggable>
   </table>
@@ -30,4 +33,7 @@ export default {
 </script>
 
 <style scoped>
+  tbody tr {
+    border-bottom: .1rem solid #cecece;
+  }
 </style>

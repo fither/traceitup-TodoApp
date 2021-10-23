@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import axios from 'axios';
 // import {actions} from './index.js';
-import todo from '../store/todo';
+import todo from './todo';
 
 describe('it tests store', () => {
     test('it sends a get request and updates todos when fetchTodos is dispatched', async () => {
