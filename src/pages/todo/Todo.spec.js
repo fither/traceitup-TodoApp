@@ -1,9 +1,11 @@
+/* eslint-disable no-undef */
 import { shallowMount } from "@vue/test-utils";
 import Todo from "./Todo.vue";
+import MockTodos from "../../data/mockTodos";
 
 function store(state = {}, dispatch = () => { }) {
     return {
-        state: { todos: [], ...state },
+        state: { todo: { todos: [] }, ...state },
         dispatch,
     };
 }
@@ -29,19 +31,19 @@ describe("it tests Todo component", () => {
     });
 
     test("it reads todos from store and passes them into List as prop", () => {
-        const expectedValue = ["TODO_1", "TODO_2", "TODO_3"];
-
         const wrapper = shallowMount(Todo, {
             global: {
                 mocks: {
                     $store: storeWithState({
-                        todos: expectedValue,
+                        todo: {
+                            todos: MockTodos
+                        },
                     }),
                 }
             },
         });
 
-        expect(wrapper.findComponent({name: 'List'}).vm.todos).toEqual(expectedValue);
+        expect(wrapper.findComponent({name: 'List'}).vm.todos).toEqual(MockTodos);
     });
 
     test("it catches create event from Create component and dispatches createTodo", () => {
@@ -64,6 +66,6 @@ describe("it tests Todo component", () => {
             },
         });
 
-        expect(dispatch).toHaveBeenCalledWith("createTodo", expectedValue);
+        expect(dispatch).toHaveBeenCalledWith("todo/createTodo", expectedValue);
     });
 });

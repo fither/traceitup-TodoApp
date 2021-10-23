@@ -1,5 +1,7 @@
+/* eslint-disable no-undef */
 import axios from 'axios';
-import {actions} from './index.js';
+// import {actions} from './index.js';
+import todo from '../store/todo';
 
 describe('it tests store', () => {
     test('it sends a get request and updates todos when fetchTodos is dispatched', async () => {
@@ -7,20 +9,25 @@ describe('it tests store', () => {
         const spy = jest.spyOn(axios, 'get').mockResolvedValue({ data: expectedValue });
 
         const state = {todos: []};
-        await actions.fetchTodos({state});
+        await todo.actions.fetchTodos({state});
 
         expect(spy).toHaveBeenCalledWith('todos');
         expect(state.todos).toEqual(expectedValue);
     });
 
     test('it sends a post request and pushes todo into todos when createTodo is dispatched', async () => {
-        const expectedValue = 'TODO';
+        const sendedValue = 'TODO';
+        const expectedValue = {
+            id: 1,
+            name: sendedValue,
+            state: 'Pending'
+        }
         const spy = jest.spyOn(axios, 'post').mockResolvedValue();
 
         const state = {todos: []};
-        await actions.createTodo({state}, expectedValue);
+        await todo.actions.createTodo({state}, sendedValue);
 
-        expect(spy).toHaveBeenCalledWith('todos', { name: expectedValue });
-        expect(state.todos).toEqual([expectedValue]);
+        expect(spy).toHaveBeenCalledWith('todos', { name: sendedValue });
+        expect(state.todos[0]).toEqual(expectedValue);
     });
 });

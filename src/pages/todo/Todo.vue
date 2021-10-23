@@ -1,27 +1,28 @@
 <template>
-    <create @create="todoCreated"/>
-    <list :todos="todos"/>
+  <create @create="todoCreated"/>
+  <list :todos="todos"/>
 </template>
 <script>
-import Create from './Create.vue';
-import List from './List.vue';
-import {mapState} from "vuex";
+  import Create from './Create.vue';
+  import List from './List.vue';
+  import {mapState} from "vuex";
 
-export default {
+  export default {
     components: {Create, List},
     computed: {
-        ...mapState(['todos'])
+      ...mapState({
+        'todos': state => state.todo.todos
+      })
     },
     methods: {
-        todoCreated(item) {
-            this.$store.dispatch('createTodo', item);
-        }
+      async todoCreated(item) {
+        await this.$store.dispatch('todo/createTodo', item);
+      }
     },
-    created() {
-        this.$store.dispatch('fetchTodos');
-    } 
-}
-
+    async created() {
+      await this.$store.dispatch('todo/fetchTodos');
+    }
+  }
 </script>
 
 <style scoped>

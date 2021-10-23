@@ -1,5 +1,7 @@
 <template>
-    <p>{{welcomeMessage}}</p>
+    <div>
+        <p>{{welcomeMessage}}</p>
+    </div>
 </template>
 
 <script>
